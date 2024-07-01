@@ -2,42 +2,6 @@ open Core
 
 (* This should look familiar by now! *)
 
-let _distribute_error image ~row ~col ~error =
-  if col + 1 <= Image.height image - 1
-  then
-    Image.set
-      image
-      ~x:row
-      ~y:(col + 1)
-      (let r, g, b = Image.get image ~x:row ~y:(col + 1) in
-       r + (error * 7 / 16), g + (error * 7 / 16), b + (error * 7 / 16));
-  if col - 1 >= 0 && row + 1 <= Image.width image - 1
-  then
-    Image.set
-      image
-      ~x:(row + 1)
-      ~y:(col - 1)
-      (let r, g, b = Image.get image ~x:(row + 1) ~y:(col - 1) in
-       r + (error * 3 / 16), g + (error * 3 / 16), b + (error * 3 / 16));
-  if row + 1 <= Image.width image - 1
-  then
-    Image.set
-      image
-      ~x:(row + 1)
-      ~y:col
-      (let r, g, b = Image.get image ~x:(row + 1) ~y:col in
-       r + (error * 5 / 16), g + (error * 5 / 16), b + (error * 5 / 16));
-  if col + 1 <= Image.height image - 1 && row + 1 <= Image.width image - 1
-  then
-    Image.set
-      image
-      ~x:(row + 1)
-      ~y:(col + 1)
-      (let r, g, b = Image.get image ~x:(row + 1) ~y:(col + 1) in
-       r + (error * 1 / 16), g + (error * 1 / 16), b + (error * 1 / 16));
-  image
-;;
-
 let diff_distribute_error image ~x ~y ~error =
   if x + 1 <= Image.width image - 1
   then
