@@ -4,9 +4,17 @@ open Core
    the "blue" pixels of the foreground image with pixels from the
    corresponding position in the background image instead of just ignoring
    the background image and returning the foreground image. *)
+
+let pixel_is_blue pixel =
+  let r, g, b = pixel in
+  b > r + g
+;;
+
 let transform ~foreground ~background =
   Image.mapi foreground ~f:(fun ~x:row ~y:col (r, g, b) ->
-    if b > r + g then Image.get background ~x:row ~y:col else r, g, b)
+    if pixel_is_blue (r, g, b)
+    then Image.get background ~x:row ~y:col
+    else r, g, b)
 ;;
 
 let get_wrong_count returned_image expected_image =
