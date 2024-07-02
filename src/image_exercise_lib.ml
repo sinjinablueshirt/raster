@@ -7,5 +7,7 @@ let command =
     ; "bluescreen", Blue_screen.command
     ; "blur", Blur.command
     ; "dither", Dither.command
+    ; "edges", Edges.command
+    ; "solarize", Solarize.command
     ]
 ;;
