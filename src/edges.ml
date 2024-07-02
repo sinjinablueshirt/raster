@@ -40,12 +40,12 @@ let apply_kernel_to_pixel image ~x ~y =
 let transform image ~threshold ~radius =
   let grayscale_image = Grayscale.transform image in
   let blurred_grayscale = Blur.transform grayscale_image ~radius in
-  let max_value = Image.max_val image in
+  let max_value = Image.max_val blurred_grayscale in
   Image.mapi blurred_grayscale ~f:(fun ~x ~y pix ->
-    if is_on_border image ~x ~y
+    if is_on_border blurred_grayscale ~x ~y
     then pix
     else if Float.( > )
-              (apply_kernel_to_pixel image ~x ~y)
+              (apply_kernel_to_pixel blurred_grayscale ~x ~y)
               (threshold *. Float.of_int max_value)
     then Pixel.of_int max_value
     else Pixel.of_int 0)
